@@ -2,7 +2,7 @@
 
 const cardTemplate = document.querySelector('#card-template').content.querySelector('.places__item');
 const placesList = document.querySelector('.places__list');
-
+const popupCaption = document.querySelector('.popup__caption');
 
 // Создание карточек
 
@@ -15,14 +15,6 @@ const createCard = (data) => {
    imgCard.src = data.link;
    cardTitle.textContent = data.name;
 
-   function ElementsCard() {
-      popupImage.src = imgCard.src;
-      popupImage.alt = cardTitle.textContent;
-      popupCaption.textContent = cardTitle.textContent;
-      openPopup(popupTypeImg);
-   }
-
-   imgCard.addEventListener("click", ElementsCard);
    cardDelete.addEventListener("click", DeleteCard);
    
    return templateElements;
