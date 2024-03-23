@@ -2,32 +2,31 @@
 
 const cardTemplate = document.querySelector('#card-template').content.querySelector('.places__item');
 const placesList = document.querySelector('.places__list');
-const popupCaption = document.querySelector('.popup__caption');
 
 // Создание карточек
 
 const createCard = (data) => {
-   const templateElements = cardTemplate.cloneNode(true);
-   const cardTitle = templateElements.querySelector(".card__title");
-   const cardDelete = templateElements.querySelector(".card__delete-button");
-   const imgCard = templateElements.querySelector(".card__image");
+   const cardElement = cardTemplate.cloneNode(true);
+   const cardTitle = cardElement.querySelector(".card__title");
+   const cardDelete = cardElement.querySelector(".card__delete-button");
+   const imgCard = cardElement.querySelector(".card__image");
 
    imgCard.src = data.link;
    cardTitle.textContent = data.name;
 
-   cardDelete.addEventListener("click", DeleteCard);
+   cardDelete.addEventListener("click", deleteCard);
    
-   return templateElements;
+   return cardElement;
 };
 
 // Удаление карточек
 
-const DeleteCard = (evnt) => {
+const deleteCard = (evnt) => {
    evnt.target.closest(".places__item").remove();
 };
 
 const renderCard = (data) => {
-   placesList.prepend(createCard(data));
+   placesList.append(createCard(data));
 };
 
 // Добавление карточек из card.js
