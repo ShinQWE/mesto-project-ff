@@ -1,6 +1,6 @@
+import {openPopupImg} from './modal.js'
 const cardTemplate = document.querySelector('#card-template').content.querySelector('.places__item');
 const placesList = document.querySelector('.places__list');
-
 
 
 // Создание карточек
@@ -17,9 +17,8 @@ const createCard = (data) => {
 
    cardDelete.addEventListener("click", deleteCard);
    likeBtn.addEventListener("click", likeCard);
-  
+   imgCard.addEventListener("click", openPopupImg);
 
-   
    return cardElement;
 };
 
@@ -41,12 +40,9 @@ const likeCard = (evnt) => {
    const likeBtnEvn = evnt.target;
    if (likeBtnEvn.classList.contains('card__like-button_is-active')) {
       likeBtnEvn.classList.remove('card__like-button_is-active');
-      likeBtnEvn.style.background = 'url(./images/like-inactive.svg)';
-    } else {
+   } else {
       likeBtnEvn.classList.add('card__like-button_is-active');
-      likeBtnEvn.style.background = 'url(./images/like-active.svg)';
-    }
-    console.log(likeCard);
+   }
 }; 
 
 
