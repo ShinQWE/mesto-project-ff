@@ -24,8 +24,6 @@ const formNewCard = document.querySelector(".popup_type_new-card .popup__form");
 
 
 
-//otherClickOverlay(); // esc и клик по оверлею (закрытие)
-
 // клик по изображению и открытие попапа
 
 function openPopupImg (event) {
@@ -38,6 +36,7 @@ function openPopupImg (event) {
 
    if (cardText && cardImage) {
       popupImage.src = cardImage.src;
+      popupImage.alt = cardText.textContent;
       popupCaptionImg.textContent = cardText.textContent;
    }
 }
