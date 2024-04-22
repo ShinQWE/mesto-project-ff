@@ -13,7 +13,7 @@ const createCard = (data, deleteCardCallback, likeCardCallback, openPopupImgCall
    const likeBtn = cardElement.querySelector('.card__like-button');
 
    imgCard.src = data.link;
-   imgCard.alt = data.cardTitle;
+   imgCard.alt = data.name;
    cardTitle.textContent = data.name;
 
    cardDelete.addEventListener("click", deleteCardCallback);
