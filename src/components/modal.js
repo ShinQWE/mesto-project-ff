@@ -1,34 +1,4 @@
 
-// Находим поля формы в DOM
-const nameInput = document.querySelector('.popup__input_type_name');
-const jobInput = document.querySelector('.popup__input_type_description');
-const popupTypeNewCard = document.querySelector('.popup_type_new-card');
-const popupTypeEdit = document.querySelector('.popup_type_edit');
-const profileDescription = document.querySelector('.profile__description');
-const profileTitle = document.querySelector('.profile__title');
-
-
-
-// открытие Редактировать профиль
-
-function openPopup () {
-   openModal(popupTypeEdit);
-
-   const nameValue = profileTitle.textContent;
-   const jobValue = profileDescription.textContent;
-
-   nameInput.value = nameValue;
-   jobInput.value = jobValue;
-   
-};
-
-
-// открытие Новое место
-
-function openPopupBtn() {
-   openModal(popupTypeNewCard);
-};
-
 //функция открытия попапа
 
 function openModal(modal) {
@@ -41,12 +11,10 @@ function openModal(modal) {
 
 // функция закрытие попапа
 
-function closeModal(event) {
-   if (event != null) {
-      event.classList.remove('popup_is-opened');
+function closeModal(modalWindow) {
+      modalWindow.classList.remove('popup_is-opened');
       document.removeEventListener('keydown', closePopupEsc);
-      event.removeEventListener('mousedown', closePopupOverlay);
-   }
+      modalWindow.removeEventListener('mousedown', closePopupOverlay);
 };
 
 // обработчики на ESC и на клик по overlay 
@@ -69,4 +37,4 @@ function closePopupEsc(evt) {
 
 
 
-export {openPopup, closeModal, openPopupBtn, openModal, closePopupOverlay, closePopupEsc};
+export {closeModal, openModal, closePopupOverlay, closePopupEsc};

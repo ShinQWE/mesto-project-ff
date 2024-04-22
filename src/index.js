@@ -2,18 +2,17 @@
 import './pages/index.css'; 
 import {initialCards} from './components/cards.js';
 import {createCard, deleteCard, likeCard} from './components/card.js';
-import {openPopup, closeModal, openPopupBtn, openModal} from './components/modal.js'
-
+import {closeModal, openModal} from './components/modal.js'
 
 // DOM
 const btnProfile = document.querySelector('.profile__edit-button');
 const formElementTypeEdit = document.querySelector('#editProfileForm');
 const nameInput = document.querySelector('.popup__input_type_name');
 const jobInput = document.querySelector('.popup__input_type_description');
-const popupBtnClose = document.querySelectorAll('.popup__close');
+const popupBtnCloseList = document.querySelectorAll('.popup__close');
 const profileAddBtn = document.querySelector('.profile__add-button');
 const placesList = document.querySelector('.places__list');
-const popForm = document.querySelector(".popup_type_new-card .popup__form");
+const popapFormTypeNewCard = document.querySelector(".popup_type_new-card .popup__form");
 const placesItem = document.querySelector('.places__list');
 const cardNameInput = document.querySelector(".popup__input_type_card-name");
 const cardLinkInput = document.querySelector(".popup__input_type_url");
@@ -21,8 +20,31 @@ const popupTypeImg = document.querySelector('.popup_type_image');
 const popupImage = document.querySelector('.popup__image');
 const popupCaptionImg = document.querySelector('.popup__caption');
 const formNewCard = document.querySelector(".popup_type_new-card .popup__form");
+const popupTypeNewCard = document.querySelector('.popup_type_new-card');
+const popupTypeEdit = document.querySelector('.popup_type_edit');
+const profileDescription = document.querySelector('.profile__description');
+const profileTitle = document.querySelector('.profile__title');
 
 
+// открытие Новое место
+
+function openPopupBtn() {
+   openModal(popupTypeNewCard);
+};
+
+
+// открытие Редактировать профиль
+
+function openPopupProfile () {
+   openModal(popupTypeEdit);
+
+   const nameValue = profileTitle.textContent;
+   const jobValue = profileDescription.textContent;
+
+   nameInput.value = nameValue;
+   jobInput.value = jobValue;
+   
+};
 
 // клик по изображению и открытие попапа
 
@@ -55,8 +77,7 @@ function handleFormSubmitTypeEdit(evt) {
    // Вставьте новые значения с помощью textContent
    profileTitle.textContent = nameValue;
    profileDescription.textContent = jobValue;
-   const modal = evt.target.closest('.popup_is-opened');
-   closeModal(modal);
+   closeModal(popupTypeEdit);
 }
 
 formElementTypeEdit.addEventListener('submit', handleFormSubmitTypeEdit);
@@ -64,7 +85,7 @@ formElementTypeEdit.addEventListener('submit', handleFormSubmitTypeEdit);
 
 // Кнопка сохранение попапа
 
-popForm.addEventListener("submit", (cardItem) => {
+popapFormTypeNewCard.addEventListener("submit", (cardItem) => {
    cardItem.preventDefault();
    const cardData = {
       link: cardLinkInput.value,
@@ -73,8 +94,7 @@ popForm.addEventListener("submit", (cardItem) => {
    const cardElement = createCard(cardData, deleteCard, likeCard, openPopupImg); // Вызов функции для создания карточки на основе данных
    placesItem.prepend(cardElement);
    formNewCard.reset();
-   const modal = cardItem.target.closest('.popup_is-opened');
-   closeModal(modal);
+   closeModal(popupTypeNewCard);
 });
 
 
@@ -88,7 +108,7 @@ initialCards.forEach(function(cardItem) {
 
 // открытие редактирования профиля
 
-btnProfile.addEventListener('click', openPopup);
+btnProfile.addEventListener('click', openPopupProfile);
 
 // открытие доб. карточки
 
@@ -96,8 +116,8 @@ profileAddBtn.addEventListener('click', openPopupBtn);
 
 // Закрытие попапов
 
-if (popupBtnClose.length > 0) {
-   popupBtnClose.forEach(btn => {
+if (popupBtnCloseList.length > 0) {
+   popupBtnCloseList.forEach(btn => {
       btn.addEventListener('click', function() {
          const popup = btn.closest('.popup');
          closeModal(popup);
