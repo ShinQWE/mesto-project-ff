@@ -10,15 +10,16 @@
 <body class="page">
 <div class="page__content">
   <header class="header page__section">
-    <img src="<%=require('./images/logo.svg')%>" alt="Логотип проекта масто" class="logo header__logo">
+    <img src=<%=require("./images/logo.svg")%> alt="Логотип проекта масто"
+        class="logo header__logo" />
   </header>
   <main class="content">  
     <section class="profile page__section">
-      <div class="profile__image" style="background-image: url(<%=require('./images/avatar.jpg')%>)"></div>
+      <button type="button" class="profile__image"></button>
       <div class="profile__info">
-        <h1 class="profile__title">Жак-Ив Кусто</h1>
+        <h1 class="profile__title"></h1>
         <button class="profile__edit-button" type="button"></button>
-        <p class="profile__description">Исследователь океана</p>
+        <p class="profile__description"></p>
       </div>
       <button class="profile__add-button" type="button"></button>
     </section>
@@ -36,10 +37,32 @@
     <div class="popup__content">
       <button type="button" id="popapCloseBtn" class="popup__close"></button>
       <h3 class="popup__title">Редактировать профиль</h3>
-      <form id="editProfileForm" class="popup__form" name="edit-profile">
-        <input type="text" name="name" class="popup__input popup__input_type_name" placeholder="Имя" required>
-        <input type="text" name="description" class="popup__input popup__input_type_description" placeholder="Занятие" required>
-        <button type="submit" id="popaupTypeEditSaveBtn" class="button popup__button">Сохранить</button>
+      <form id="editProfileForm" class="popup__form" name="edit-profile" novalidate>
+            <input type="text" name="name" id="name" class="popup__input popup__input_type_name" placeholder="Имя"  minlength="2" maxlength="40" required>
+            <span id="name-error" class="popup-error"></span>
+            <input type="text" name="description" id="description" class="popup__input popup__input_type_description" placeholder="Занятие" minlength="2" maxlength="200" required>
+            <span id="description-error" class="popup-error"></span>
+            <button type="submit" id="popaupTypeEditSaveBtn" class="button popup__button">Сохранить</button>
+      </form>
+    </div>
+  </div>
+  <div class="popup popup_type_edit-avatar">
+    <div class="popup__content">
+      <button type="button" class="popup__close"></button>
+      <h3 class="popup__title">Обновить аватар</h3>
+      <form id="editAvatar" class="popup__form" name="edit-avatar">
+        <input
+          type="url"
+          name="avatar"
+          class="popup__input popup__input_type_url"
+          placeholder="Ссылка на картинку"
+          required
+          id="avatar-input"
+        />
+        <span id="avatar-input" class="popup-error"></span>
+        <button type="submit" class="button popup__button">
+          Сохранить
+        </button>
       </form>
     </div>
   </div>
@@ -47,9 +70,11 @@
     <div class="popup__content">
       <button type="button" class="popup__close"></button>
       <h3 class="popup__title">Новое место</h3>
-      <form class="popup__form" name="new-place">
-        <input type="text" name="place-name" class="popup__input popup__input_type_card-name" placeholder="Название" required>
-        <input type="url" name="link" class="popup__input popup__input_type_url" placeholder="Ссылка на картинку" required>
+      <form id="typeNewCard" class="popup__form" name="new-place" novalidate>
+        <input type="text" name="place-name" id="placeName" class="popup__input popup__input_type_card-name" placeholder="Название" minlength="2" maxlength="30" required>
+        <span id="placeName-error" class="popup-error"></span>
+        <input type="url" name="link" id="link" class="popup__input popup__input_type_url" placeholder="Ссылка на картинку" required>
+        <span id="link-error" class="popup-error"></span>
         <button type="submit" id="popaupTypeNewCardSaveBtn" class="button popup__button">Сохранить</button>
       </form>
     </div>
@@ -71,7 +96,10 @@
     <div class="card__description">
       <h2 class="card__title">
       </h2>
-      <button type="button" class="card__like-button"></button>
+      <div class="cards__item-like">
+        <button type="button" class="card__like-button"></button>
+        <p class="card__like-leng"></p>
+      </div>
     </div>
   </li>
 </template>

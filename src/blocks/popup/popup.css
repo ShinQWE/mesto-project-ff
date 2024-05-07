@@ -8,6 +8,15 @@
 @import url('./__caption/popup__caption.css');
 @import url('./__image/popup__image.css');
 
+
+@import url('./__-erorr/popup-error.css');
+@import url('./_button_disabled/popup__button_disabled.css');
+@import url('./_error_visible/popup__error_visible.css');
+@import url('./_input_type_error/popup__input_type_error.css');
+@import url('./__like/card__like-leng.css');
+@import url('./__cards__item/cards__item-like.css');
+
+
 .popup {
   font-family: 'Inter', Arial, sans-serif;
   display: none;
