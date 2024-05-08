@@ -33,9 +33,7 @@ export const checkImageUrl = (url) => {
 
 export const getInitialCards = () => {
    return fetch(`${CONFIG.baseUrl}/cards`, { headers: CONFIG.headers })
-   .then(
-      handleResponse
-   );
+   .then(handleResponse);
 };
 
 export const createCard = ({ name, link }) => {

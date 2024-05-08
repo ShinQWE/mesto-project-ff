@@ -1,7 +1,7 @@
 //import
 import './pages/index.css'; 
 import {createCard as DOMCreateCard} from './components/card.js';
-import {closeModal, openModal, handleModalClick} from './components/modal.js'
+import {closeModal, openModal, closePopupOverlay} from './components/modal.js'
 import {enableValidation, clearValidation} from './components/validation.js';
 import {
    getInitialCards as APIGetInitialCards,
@@ -50,6 +50,8 @@ const popupProfileButtonOpen = document.querySelector('.profile__edit-button');
 const popupConfirm = document.querySelector('.popup_type_confirm');
 const popupConfirmButton = popupConfirm.querySelector('.popup__button_confirm');
 
+
+
 // включение валидации вызовом enableValidation
 // все настройки передаются при вызове
 const validationConfig = {
@@ -62,18 +64,13 @@ const validationConfig = {
 };
 
 //ПОЛУЧЕНИЕ ПРОФИЛЯ 
-const setProfile = ({ name, description, avatar }) => {
+const setProfile = ({description, avatar}) => {
    profileName.textContent = 'SHIN';
    profileDescription.textContent = description;
    profileImage.style.backgroundImage = `url(${avatar})`;
 };
 
-const renderLoading = ({ buttonElement, isLoading }) => {
-   if (isLoading) {
-      buttonElement.textContent = 'Сохраненить';
-   } 
-};
-
+//LIKES
 const handleCardLike = ({ cardId, buttonElement, counterElement }) => {
    buttonElement.disabled = true;
 
@@ -109,6 +106,7 @@ const handleCardLike = ({ cardId, buttonElement, counterElement }) => {
    }
 };
 
+//удаление карточки
 const handleCardDelete = ({ cardId, buttonElement }) => {
    openModal(popupConfirm);
    popupConfirmButton.onclick = () => {
@@ -127,13 +125,9 @@ const handleCardDelete = ({ cardId, buttonElement }) => {
    };
 };
 
+//для отправки
 const handleCardFormSubmit = (event) => {
    event.preventDefault();
-
-   renderLoading({
-      buttonElement: cardFormSubmitButton,
-      isLoading: true,
-   });
 
    APICreateCard({
       name: cardNameInput.value,
@@ -147,7 +141,7 @@ const handleCardFormSubmit = (event) => {
             data: cardData,
             onDelete: handleCardDelete,
             onLike: handleCardLike,
-            onImageClick: handleCardImageClick,
+            onImageClick: openPopupImg,
          })
       );
 
@@ -158,21 +152,10 @@ const handleCardFormSubmit = (event) => {
       .catch((error) => {
          console.error(error);
       })
-      .finally(() => {
-         renderLoading({
-            buttonElement: cardFormSubmitButton,
-            isLoading: false,
-         });
-      });
 };
 
 const handleProfileFormSubmit = (event) => {
    event.preventDefault();
-
-   renderLoading({
-      buttonElement: profileFormSubmitButton,
-      isLoading: true,
-   });
 
    APIUpdateUserInfo({
       name: profileNameInput.value,
@@ -190,21 +173,10 @@ const handleProfileFormSubmit = (event) => {
       .catch((error) => {
          console.error(error);
       })
-      .finally(() => {
-         renderLoading({
-            buttonElement: profileFormSubmitButton,
-            isLoading: false,
-         });
-      });
 };
 
 const handleProfileImageFormSubmit = (event) => {
    event.preventDefault();
-
-   renderLoading({
-      buttonElement: profileImageFormSubmitButton,
-      isLoading: true,
-   });
 
    APIUpdateUserAvatar(profileImageInput.value)
       .then(({ name, about, avatar }) => {
@@ -219,12 +191,6 @@ const handleProfileImageFormSubmit = (event) => {
       .catch((error) => {
          console.error(error);
       })
-      .finally(() => {
-         renderLoading({
-            buttonElement: profileImageFormSubmitButton,
-            isLoading: false,
-         });
-      });
 };
 
 const handlePopupProfileButtonOpenClick = () => {
@@ -244,7 +210,8 @@ const handlePopupCardButtonOpenClick = () => {
    openModal(popupCard);
 };
 
-const handleCardImageClick = ({ cardName, cardLink }) => {
+//клик по картинке
+const openPopupImg = ({ cardName, cardLink }) => {
    popupImageImage.src = cardLink;
    popupImageImage.alt = cardName;
    popupImageCaption.textContent = cardName;
@@ -266,25 +233,23 @@ profileForm.addEventListener('submit', handleProfileFormSubmit);
 
 profileImageForm.addEventListener('submit', handleProfileImageFormSubmit);
 
-popupImage.addEventListener('click', handleModalClick);
+popupImage.addEventListener('click', closePopupOverlay);
 
-popupProfileImage.addEventListener('click', handleModalClick);
+popupProfileImage.addEventListener('click', closePopupOverlay);
 
 profileImage.addEventListener('click', handleProfileImageClick);
 
-popupCard.addEventListener('click', handleModalClick);
+popupCard.addEventListener('click', closePopupOverlay);
 popupCardButtonOpen.addEventListener('click', handlePopupCardButtonOpenClick);
 
-popupProfile.addEventListener('click', handleModalClick);
-popupProfileButtonOpen.addEventListener(
-   'click',
-   handlePopupProfileButtonOpenClick
-);
+popupProfile.addEventListener('click', closePopupOverlay);
+popupProfileButtonOpen.addEventListener('click', handlePopupProfileButtonOpenClick);
 
-popupConfirm.addEventListener('click', handleModalClick);
+popupConfirm.addEventListener('click', closePopupOverlay);
 
 enableValidation(validationConfig);
 
+//загрузка начальная
 Promise.all([APIGetUserInfo(), APIGetInitialCards()])
    .then(([{ name, about, avatar, ['_id']: currentUserId }, cardsData]) => {
       setProfile({
@@ -301,7 +266,7 @@ Promise.all([APIGetUserInfo(), APIGetInitialCards()])
             data: cardData,
             onDelete: handleCardDelete,
             onLike: handleCardLike,
-            onImageClick: handleCardImageClick,
+            onImageClick: openPopupImg,
          })
          );
    });
