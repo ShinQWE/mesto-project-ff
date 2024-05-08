@@ -2,4 +2,4 @@
 
 https://github.com/ShinQWE/mesto-project-ff.git
 
-https://shinqwe.github.io/mesto-project-ff/
+https://ShinQWE.github.io/mesto-project-ff/
