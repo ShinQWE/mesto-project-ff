@@ -1,6 +1,6 @@
 //import
 import './pages/index.css'; 
-import {createCard as DOMCreateCard} from './components/card.js';
+import {createCard} from './components/card.js';
 import {closeModal, openModal, closePopupOverlay} from './components/modal.js'
 import {enableValidation, clearValidation} from './components/validation.js';
 import {
@@ -135,7 +135,7 @@ const handleCardFormSubmit = (event) => {
    })
    .then((cardData) => {
       cardsContainer.prepend(
-         DOMCreateCard({
+         createCard({
             currentUserId: cardData.owner['_id'],
             template: cardTemplate,
             data: cardData,
@@ -227,6 +227,8 @@ const handleProfileImageClick = () => {
    openModal(popupProfileImage);
 };
 
+//обработчики событий
+
 cardForm.addEventListener('submit', handleCardFormSubmit);
 
 profileForm.addEventListener('submit', handleProfileFormSubmit);
@@ -260,7 +262,7 @@ Promise.all([APIGetUserInfo(), APIGetInitialCards()])
 
       cardsData.forEach((cardData) => {
          cardsContainer.append(
-         DOMCreateCard({
+         createCard({
             currentUserId,
             template: cardTemplate,
             data: cardData,
