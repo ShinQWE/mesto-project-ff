@@ -24,4 +24,4 @@ const closeModal = (element) => {
    element.classList.remove('popup_is-opened');
 };
 
-export { openModal, closeModal, handleModalClick };
+export {openModal, closeModal, handleModalClick};

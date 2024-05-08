@@ -17,13 +17,14 @@ export const handleResponse = (response) => {
 export const checkImageUrl = (url) => {
    return fetch(url, {
       method: 'HEAD',
-   }).then(({ ok, headers, status }) => {
+   })
+   .then(({ ok, headers, status }) => {
       if (ok) {
          if (headers.get('Content-Type').includes('image')) {
          return Promise.resolve();
       }
 
-      return Promise.reject('Ошибка: URL ссылается на не изображение');
+      return Promise.reject('Ошибка: URL ссылается не на изображение');
    }
    
       return Promise.reject(`Ошибка: ${status}`);
@@ -46,7 +47,8 @@ export const createCard = ({ name, link }) => {
          name,
          link,
       }),
-   }).then(handleResponse)
+   })
+   .then(handleResponse)
    );
 };
 
@@ -54,27 +56,29 @@ export const deleteCard = (cardId) => {
    return fetch(`${CONFIG.baseUrl}/cards/${cardId}`, {
       headers: CONFIG.headers,
       method: 'DELETE',
-   }).then(handleResponse);
+   })
+   .then(handleResponse);
 };
 
 export const likeCard = (cardId) => {
    return fetch(`${CONFIG.baseUrl}/cards/likes/${cardId}`, {
       headers: CONFIG.headers,
       method: 'PUT',
-   }).then(handleResponse);
+   })
+   .then(handleResponse);
 };
 
 export const unLikeCard = (cardId) => {
    return fetch(`${CONFIG.baseUrl}/cards/likes/${cardId}`, {
       headers: CONFIG.headers,
       method: 'DELETE',
-   }).then(handleResponse);
+   })
+   .then(handleResponse);
 };
 
 export const getUserInfo = () => {
-   return fetch(`${CONFIG.baseUrl}/users/me`, { headers: CONFIG.headers }).then(
-      handleResponse
-   );
+   return fetch(`${CONFIG.baseUrl}/users/me`, { headers: CONFIG.headers })
+   .then(handleResponse);
 };
 
 export const updateUserInfo = ({ name, description }) => {
@@ -85,7 +89,8 @@ export const updateUserInfo = ({ name, description }) => {
       name,
       about: description,
    }),
-   }).then(handleResponse);
+   })
+   .then(handleResponse);
 };
 
 export const updateUserAvatar = (url) => {
