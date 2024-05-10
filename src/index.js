@@ -70,6 +70,14 @@ const setProfile = ({description, avatar}) => {
    profileImage.style.backgroundImage = `url(${avatar})`;
 };
 
+const renderLoading = ({ buttonElement, isLoading }) => {
+   if (isLoading) {
+      buttonElement.textContent = 'Сохранение...';
+   } else {
+      buttonElement.textContent = 'Сохранить';
+   }
+};
+
 //LIKES
 const handleCardLike = ({ cardId, buttonElement, counterElement }) => {
    buttonElement.disabled = true;
@@ -129,6 +137,11 @@ const handleCardDelete = ({ cardId, buttonElement }) => {
 const handleCardFormSubmit = (event) => {
    event.preventDefault();
 
+   renderLoading({
+      buttonElement: cardFormSubmitButton,
+      isLoading: true,
+   });
+
    APICreateCard({
       name: cardNameInput.value,
       link: cardLinkInput.value,
@@ -152,10 +165,21 @@ const handleCardFormSubmit = (event) => {
       .catch((error) => {
          console.error(error);
       })
+      .finally(() => {
+         renderLoading({
+            buttonElement: cardFormSubmitButton,
+            isLoading: false,
+         });
+      });
 };
 
 const handleProfileFormSubmit = (event) => {
    event.preventDefault();
+
+   renderLoading({
+      buttonElement: profileFormSubmitButton,
+      isLoading: true,
+   });
 
    APIUpdateUserInfo({
       name: profileNameInput.value,
@@ -173,10 +197,19 @@ const handleProfileFormSubmit = (event) => {
       .catch((error) => {
          console.error(error);
       })
+      renderLoading({
+         buttonElement: profileFormSubmitButton,
+         isLoading: false,
+      });
 };
 
 const handleProfileImageFormSubmit = (event) => {
    event.preventDefault();
+
+   renderLoading({
+      buttonElement: profileImageFormSubmitButton,
+      isLoading: true,
+   });
 
    APIUpdateUserAvatar(profileImageInput.value)
       .then(({ name, about, avatar }) => {
@@ -191,6 +224,12 @@ const handleProfileImageFormSubmit = (event) => {
       .catch((error) => {
          console.error(error);
       })
+      .finally(() => {
+         renderLoading({
+            buttonElement: profileImageFormSubmitButton,
+            isLoading: false,
+         });
+      });
 };
 
 const handlePopupProfileButtonOpenClick = () => {
@@ -252,6 +291,7 @@ popupConfirm.addEventListener('click', closePopupOverlay);
 enableValidation(validationConfig);
 
 //загрузка начальная
+//Свойство _id — идентификатор пользователя, в данном случае вашего
 Promise.all([APIGetUserInfo(), APIGetInitialCards()])
    .then(([{ name, about, avatar, ['_id']: currentUserId }, cardsData]) => {
       setProfile({
