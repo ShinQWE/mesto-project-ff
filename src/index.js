@@ -64,8 +64,8 @@ const validationConfig = {
 };
 
 //ПОЛУЧЕНИЕ ПРОФИЛЯ 
-const setProfile = ({description, avatar}) => {
-   profileName.textContent = 'SHIN';
+const setProfile = ({name, description, avatar}) => {
+   profileName.textContent = name;
    profileDescription.textContent = description;
    profileImage.style.backgroundImage = `url(${avatar})`;
 };
